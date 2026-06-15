@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Product Catalog</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#f4f4f4;
+padding:20px;
+}
+
+header{
+text-align:center;
+margin-bottom:20px;
+}
+
+input,select{
+padding:10px;
+margin:10px;
+}
+
+.products{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+}
+
+.card{
+background:white;
+padding:15px;
+border-radius:10px;
+box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+.card img{
+width:100%;
+height:200px;
+object-fit:cover;
+border-radius:10px;
+}
+
+.card h3{
+margin:10px 0;
+}
+
+.price{
+color:green;
+font-weight:bold;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>🛒 Product Catalog</h1>
+
+<input type="text"
+id="search"
+placeholder="Search Product"
+onkeyup="displayProducts()">
+
+<select id="category" onchange="displayProducts()">
+<option value="All">All</option>
+<option value="Electronics">Electronics</option>
+<option value="Fashion">Fashion</option>
+</select>
+</header>
+
+<div class="products" id="products"></div>
+
+<script>
+
+const products=[
+
+{
+name:"Laptop",
+price:"₹55,000",
+category:"Electronics",
+image:"https://picsum.photos/300?1"
+},
+
+{
+name:"Headphones",
+price:"₹2,500",
+category:"Electronics",
+image:"https://picsum.photos/300?2"
+},
+
+{
+name:"T-Shirt",
+price:"₹700",
+category:"Fashion",
+image:"https://picsum.photos/300?3"
+},
+
+{
+name:"Shoes",
+price:"₹2,000",
+category:"Fashion",
+image:"https://picsum.photos/300?4"
+}
+
+];
+
+function displayProducts(){
+
+const search=
+document.getElementById("search")
+.value.toLowerCase();
+
+const category=
+document.getElementById("category")
+.value;
+
+const productContainer=
+document.getElementById("products");
+
+productContainer.innerHTML="";
+
+const filtered=products.filter(product=>{
+
+const matchSearch=
+product.name.toLowerCase().includes(search);
+
+const matchCategory=
+category==="All" ||
+product.category===category;
+
+return matchSearch && matchCategory;
+
+});
+
+filtered.forEach(product=>{
+
+productContainer.innerHTML+=`
+
+<div class="card">
+
+<img src="${product.image}">
+
+<h3>${product.name}</h3>
+
+<p>${product.category}</p>
+
+<p class="price">${product.price}</p>
+
+<button>Add to Cart</button>
+
+</div>
+
+`;
+
+});
+
+}
+
+displayProducts();
+
+</script>
+
+</body>
+</html>
